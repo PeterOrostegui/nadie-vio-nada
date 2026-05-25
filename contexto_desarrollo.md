@@ -87,3 +87,4 @@ El Agresor puede usar sus puntos de Poder (⚡) para perjudicar a la Víctima a 
    - El Tablero 3D ocupa la parte superior en móviles, mientras que el HUD de estadísticas y el dado se reubicaron en una barra inferior deslizable horizontalmente (`overflow-x: auto`).
    - El menú de navegación ocultó sus textos dejando solo iconos, y los personajes se apilan en 1 sola columna para facilitar la lectura y selección táctil.
    - Ajuste de modales de historia al 95% del viewport para lectura óptima en celulares.
+5. **Ajuste Visual Menor:** Se actualizó el archivo `index.html` para utilizar el logo del juego (`logo.png`) como Favicon de la pestaña del navegador, reemplazando el genérico de Vite.
