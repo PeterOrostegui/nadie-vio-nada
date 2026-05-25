@@ -1,0 +1,242 @@
+.char-selection-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: calc(2vh + 70px) 40px 5vh;
+  background-color: var(--color-gris-100);
+  background-image: linear-gradient(rgba(26, 28, 35, 0.88), rgba(26, 28, 35, 0.88)), url('../public/fondo_seleccion.png');
+  background-size: cover;
+  background-position: center;
+  color: var(--color-main-blanco);
+  overflow: hidden;
+}
+
+.selection-header {
+  text-align: center;
+  margin-bottom: 5vh;
+}
+
+.selection-title {
+  font-size: clamp(2rem, 4vh, 3.5rem);
+  font-weight: 700;
+  margin-bottom: 5px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.1);
+}
+
+.selection-subtitle {
+  font-size: 1.2rem;
+  color: var(--color-gris-70);
+}
+
+.character-roster {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 5vh;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+}
+
+.character-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.character-visual {
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 35vh; /* Standardize height using viewport height */
+  min-height: 200px;
+}
+
+.character-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+  transition: filter 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom center;
+}
+
+/* Hover & Focus Glow Effect (Personality Color) */
+.character-wrapper:hover .character-img,
+.character-wrapper.focused .character-img {
+  filter: drop-shadow(0 0 30px var(--char-glow-color));
+  transform: scale(1.08);
+}
+
+/* Selected Glow Effects (Paleta Estricta) */
+.character-wrapper.selected-victim .character-img {
+  filter: drop-shadow(0 0 35px var(--color-main-azul));
+  transform: scale(1.08);
+}
+
+.character-wrapper.selected-bully .character-img {
+  filter: drop-shadow(0 0 35px var(--color-main-rojo));
+  transform: scale(1.08);
+}
+
+.character-info {
+  text-align: center;
+  width: 100%;
+  opacity: 0.5;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(10px);
+}
+
+.character-wrapper:hover .character-info,
+.character-wrapper.focused .character-info,
+.character-wrapper.selected-victim .character-info,
+.character-wrapper.selected-bully .character-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.character-info h2 {
+  font-size: clamp(1.5rem, 3vh, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.char-pronouns {
+  font-size: 0.9rem;
+  color: var(--color-gris-60);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.char-archetype {
+  font-weight: 700;
+  color: var(--color-sec-amarillo);
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.char-desc {
+  font-size: clamp(0.85rem, 1.5vh, 1rem);
+  color: var(--color-gris-70);
+  margin-bottom: 15px;
+  line-height: 1.4;
+  height: auto;
+  min-height: 60px;
+  padding: 0 10px;
+}
+
+.selection-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.character-wrapper.focused .selection-buttons,
+.character-wrapper.selected-victim .selection-buttons,
+.character-wrapper.selected-bully .selection-buttons {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.sel-btn {
+  padding: 10px 20px;
+  border: 1px solid var(--color-gris-80);
+  background: transparent;
+  color: var(--color-gris-60);
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.sel-btn.victim-btn:hover,
+.sel-btn.victim-btn.active {
+  border-color: var(--color-main-azul);
+  color: var(--color-main-blanco);
+  background: var(--color-main-azul);
+  box-shadow: 0 0 20px rgba(38, 83, 157, 0.6);
+}
+
+.sel-btn.bully-btn:hover,
+.sel-btn.bully-btn.active {
+  border-color: var(--color-main-rojo);
+  color: var(--color-main-blanco);
+  background: var(--color-main-rojo);
+  box-shadow: 0 0 20px rgba(180, 29, 29, 0.6);
+}
+
+.start-game-btn {
+  padding: 15px 50px;
+  font-size: clamp(1.2rem, 2vh, 1.5rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  background-color: var(--color-sec-verde);
+  color: var(--color-main-blanco);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  margin-bottom: 2vh;
+}
+
+.start-game-btn:disabled {
+  background-color: var(--color-gris-80);
+  color: var(--color-gris-70);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.start-game-btn:hover:not(:disabled) {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+}
+
+/* Role Badges */
+.role-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  color: var(--color-main-blanco);
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  animation: badge-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.badge-victim {
+  background: var(--color-main-azul);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.badge-bully {
+  background: var(--color-main-rojo);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+@keyframes badge-pop {
+  0% { transform: translate(-50%, 20px) scale(0.5); opacity: 0; }
+  100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+}
