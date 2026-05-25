@@ -92,19 +92,34 @@
 
 @media (max-width: 768px) {
   .global-navbar {
-    padding: 0 20px;
+    padding: 0 15px;
+    height: 60px;
   }
   
   .navbar-right {
-    gap: 10px;
+    gap: 8px;
   }
   
+  .navbar-link span {
+    display: none;
+  }
+  
+  .navbar-cta-btn span {
+    display: none;
+  }
+
   .navbar-link {
-    font-size: 0.75rem;
-    padding: 6px 8px;
+    font-size: 1.2rem;
+    padding: 8px;
+    border-radius: 50%;
+  }
+
+  .navbar-cta-btn {
+    padding: 8px;
+    border-radius: 50%;
   }
   
   .navbar-logo {
-    height: 30px;
+    height: 28px;
   }
 }

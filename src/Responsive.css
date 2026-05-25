@@ -1,0 +1,82 @@
+/* ============================================================ */
+/* RESPONSIVE DESIGN FOR APP AND GAME SCREEN                     */
+/* ============================================================ */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+    padding-top: 60px; /* Navbar is shorter on mobile */
+  }
+
+  .board-area {
+    flex: 1 1 60%;
+    padding: 10px;
+  }
+
+  .hud-area {
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    padding: 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 15px;
+    align-items: stretch;
+    border-top: 2px solid rgba(251, 191, 36, 0.3);
+    background: rgba(15, 23, 42, 0.95);
+  }
+
+  /* HUD sections inside the horizontal scroll */
+  .hud-section {
+    min-width: 250px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .dice-container {
+    min-width: 200px;
+    flex-shrink: 0;
+    margin-top: 0;
+    justify-content: center;
+  }
+
+  .dice-btn {
+    padding: 15px 20px;
+  }
+
+  /* Adjust overlays */
+  .turn-indicator {
+    padding: 6px 15px !important;
+  }
+
+  .turn-indicator span {
+    font-size: 1rem !important;
+  }
+
+  .turn-indicator span:last-child {
+    font-size: 1.2rem !important;
+  }
+
+  /* Modals */
+  .modal-content {
+    max-width: 95%;
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .event-card {
+    padding: 20px;
+  }
+
+  .event-title {
+    font-size: 1.5rem;
+  }
+
+  .event-desc {
+    font-size: 0.95rem;
+  }
+
+  .decision-options {
+    flex-direction: column;
+  }
+}

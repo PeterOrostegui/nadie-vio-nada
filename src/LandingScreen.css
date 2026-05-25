@@ -541,7 +541,7 @@
     flex-direction: column;
     text-align: center;
     gap: 30px;
-    padding: 20px;
+    padding: 90px 20px 20px;
   }
   
   .landing__left {
@@ -565,16 +565,27 @@
   }
 
   .landing__logo {
-    width: min(350px, 80vw);
+    width: min(300px, 80vw);
   }
 }
 
 @media (max-width: 768px) {
   .landing__cta {
     padding: 14px 35px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
   .landing__rules-modal {
-    padding: 25px;
+    padding: 20px;
+    max-height: 85vh;
+  }
+  .landing__rules-modal h2 {
+    font-size: 1.5rem;
+  }
+  .landing__rules-modal h3 {
+    font-size: 1.1rem;
+  }
+  .landing__footer {
+    position: relative;
+    padding-bottom: 20px;
   }
 }

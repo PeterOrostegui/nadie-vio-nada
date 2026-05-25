@@ -12,7 +12,7 @@ const FlipCardModalWrapper = ({ cardType, children }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const bgImage = cardType === 'evento' ? `url(${asset('dorso_evento.jpeg')})` : `url(${asset('dorso_consecuencia.jpeg')})`;
+  const bgImage = cardType === 'evento' ? `url(${asset('dorso_evento.png')})` : `url(${asset('dorso_consecuencia.png')})`;
 
   return (
     <div className="modal-flip-container">

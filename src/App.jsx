@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { asset } from './utils';
+import { playDiceSound, playMoveSound, toggleGlobalMute, startAmbientSound, stopAmbientSound } from './audioSynth';
 import { BOARD_CELLS, EVENT_CARDS, CONSEQUENCE_CARDS, CHARACTERS, CELL_COORDS } from './data';
 import './App.css';
+import './Responsive.css';
 import { Volume2, VolumeX, Users, Dice5, AlertTriangle, User, ArrowLeft, Home } from 'lucide-react';
 import Board3D from './Board3D';
 import LandingScreen from './LandingScreen';
 import CharacterSelectionScreen from './CharacterSelectionScreen';
 import Navbar from './Navbar';
 import FlipCardModalWrapper from './FlipCardModalWrapper';
+import MuteButton from './MuteButton';
 
 let eventDeck = [];
 const drawEventCard = () => {
@@ -67,9 +70,19 @@ function App() {
     sessionStorage.setItem('activeModal', JSON.stringify(activeModal));
   }, [gamePhase, players, activePlayerIndex, activeModal]);
 
+  // Auto-start ambient sound when game phase is 'playing'
+  useEffect(() => {
+    if (gamePhase === 'playing') {
+      startAmbientSound();
+    } else {
+      stopAmbientSound();
+    }
+  }, [gamePhase]);
+
   const activePlayer = players[activePlayerIndex];
 
   const handleReturnToHome = () => {
+    stopAmbientSound();
     setGamePhase('landing');
     setActiveModal(null);
     setPlayers([]);
@@ -110,8 +123,7 @@ function App() {
     setDiceResult(result);
 
     // Audio de dados
-    const diceSound = new Audio(asset('sounds/dice-roll.mp3'));
-    diceSound.play().catch(e => console.warn('Audio no pudo reproducirse (el archivo puede no existir):', e));
+    playDiceSound();
 
     setTimeout(() => {
       setIsRolling(false); 
@@ -162,6 +174,7 @@ function App() {
       const nextPos = startPos + currentStep;
       
       setPlayers(prev => prev.map((p, i) => i === activePlayerIndex ? { ...p, pos: nextPos } : p));
+      playMoveSound();
       
       if (currentStep >= actualMoves) {
         clearInterval(stepInterval);
@@ -721,6 +734,7 @@ function App() {
           showPlayButton={true}
           onPlayClick={() => setGamePhase('character_selection')}
         />
+        <MuteButton gamePhase={gamePhase} />
         <LandingScreen onStart={() => setGamePhase('character_selection')} />
       </>
     );
@@ -730,6 +744,7 @@ function App() {
     return (
       <>
         <Navbar onHomeClick={handleReturnToHome} showPlayButton={false} />
+        <MuteButton gamePhase={gamePhase} />
         <CharacterSelectionScreen 
           onStartGame={(selectedPlayers) => {
             const initializedPlayers = selectedPlayers.map(p => ({
@@ -757,6 +772,7 @@ function App() {
   return (
     <>
       <Navbar onHomeClick={handleReturnToHome} showPlayButton={false} />
+      <MuteButton gamePhase={gamePhase} />
       
       {diceMessage && (
         <div style={{
@@ -796,9 +812,9 @@ function App() {
                onClick={() => setInfoModal('evento')}
                title="Mazo de Eventos"
           >
-            <img src={asset('dorso_evento.jpeg')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '6px', left: '6px', filter: 'brightness(0.3)' }} />
-            <img src={asset('dorso_evento.jpeg')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '3px', left: '3px', filter: 'brightness(0.6)' }} />
-            <img src={asset('dorso_evento.jpeg')} alt="Mazo Eventos" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'relative' }} />
+            <img src={asset('dorso_evento.png')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '6px', left: '6px', filter: 'brightness(0.3)' }} />
+            <img src={asset('dorso_evento.png')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '3px', left: '3px', filter: 'brightness(0.6)' }} />
+            <img src={asset('dorso_evento.png')} alt="Mazo Eventos" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'relative' }} />
           </div>
           
           {/* Mazo Consecuencia */}
@@ -808,9 +824,9 @@ function App() {
                onClick={() => setInfoModal('consecuencia')}
                title="Mazo de Consecuencias"
           >
-            <img src={asset('dorso_consecuencia.jpeg')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '6px', left: '-6px', filter: 'brightness(0.3)' }} />
-            <img src={asset('dorso_consecuencia.jpeg')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '3px', left: '-3px', filter: 'brightness(0.6)' }} />
-            <img src={asset('dorso_consecuencia.jpeg')} alt="Mazo Consecuencias" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'relative' }} />
+            <img src={asset('dorso_consecuencia.png')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '6px', left: '-6px', filter: 'brightness(0.3)' }} />
+            <img src={asset('dorso_consecuencia.png')} alt="" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'absolute', top: '3px', left: '-3px', filter: 'brightness(0.6)' }} />
+            <img src={asset('dorso_consecuencia.png')} alt="Mazo Consecuencias" style={{ width: '100px', height: '150px', objectFit: 'contain', position: 'relative' }} />
           </div>
         </div>
 
@@ -982,9 +998,9 @@ function App() {
         <div className="modal-overlay" style={{ zIndex: 1200 }}>
           <div className="modal-content" style={{ border: infoModal === 'evento' ? '2px solid #26539D' : '2px solid #ef4444' }}>
             <h2 className="modal-title" style={{ color: infoModal === 'evento' ? '#26539D' : '#ef4444', textAlign: 'center', fontSize: '1.6rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-              <img src={infoModal === 'evento' ? asset('dorso_evento.jpeg') : asset('dorso_consecuencia.jpeg')} alt="Icono" style={{ width: '24px', height: '36px', objectFit: 'contain' }} />
+              <img src={infoModal === 'evento' ? asset('dorso_evento.png') : asset('dorso_consecuencia.png')} alt="Icono" style={{ width: '24px', height: '36px', objectFit: 'contain' }} />
               {infoModal === 'evento' ? 'MAZO DE EVENTOS' : 'MAZO DE CONSECUENCIAS'}
-              <img src={infoModal === 'evento' ? asset('dorso_evento.jpeg') : asset('dorso_consecuencia.jpeg')} alt="Icono" style={{ width: '24px', height: '36px', objectFit: 'contain' }} />
+              <img src={infoModal === 'evento' ? asset('dorso_evento.png') : asset('dorso_consecuencia.png')} alt="Icono" style={{ width: '24px', height: '36px', objectFit: 'contain' }} />
             </h2>
             <p className="modal-body" style={{ textAlign: 'center', marginTop: '15px' }}>
               {infoModal === 'evento' 

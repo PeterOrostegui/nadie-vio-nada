@@ -16,17 +16,17 @@ export default function Navbar({ onHomeClick, onPlayClick, showPlayButton }) {
         
         <div className="navbar-right">
           <button className="navbar-link" onClick={onHomeClick}>
-            <Home size={18} /> Inicio
+            <Home size={18} /> <span>Inicio</span>
           </button>
           <button className="navbar-link" onClick={() => setShowRules(true)}>
-            <BookOpen size={18} /> Cómo Jugar
+            <BookOpen size={18} /> <span>Cómo Jugar</span>
           </button>
           <button className="navbar-link" onClick={() => setShowAbout(true)}>
-            <Info size={18} /> Sobre el Proyecto
+            <Info size={18} /> <span>Sobre el Proyecto</span>
           </button>
           {showPlayButton && (
             <button className="navbar-cta-btn" onClick={onPlayClick}>
-              <Play size={18} /> JUGAR AHORA
+              <Play size={18} /> <span>JUGAR AHORA</span>
             </button>
           )}
         </div>

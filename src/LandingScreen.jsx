@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { asset } from './utils';
-import { Volume2, VolumeX, Users, Clock, ShieldCheck, BookOpen, Info, Target, Dice5, Layers, Zap, RotateCcw } from 'lucide-react';
+import { Users, Clock, ShieldCheck, BookOpen, Info, Target, Dice5, Layers, Zap, RotateCcw } from 'lucide-react';
 import './LandingScreen.css';
 
 const QUOTE_TEXT = 'Suena la alarma. Otro día. No sabes lo que te espera hoy.';
@@ -8,32 +8,10 @@ const QUOTE_TEXT = 'Suena la alarma. Otro día. No sabes lo que te espera hoy.';
 export default function LandingScreen({ onStart }) {
   const [typedText, setTypedText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const typingDone = useRef(false);
   const audioRef = useRef(null);
 
-  // Initialize audio object once
-  useEffect(() => {
-    audioRef.current = new Audio('https://cdn.freesound.org/previews/413/413150_7169466-lq.mp3'); // Example ambient school sound
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
-    
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
 
-  const toggleAudio = () => {
-    if (isAudioPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(e => console.log('Audio play failed:', e));
-    }
-    setIsAudioPlaying(!isAudioPlaying);
-  };
 
   // Typewriter effect
   useEffect(() => {
@@ -69,15 +47,6 @@ export default function LandingScreen({ onStart }) {
 
       {/* Vignette */}
       <div className="landing__vignette" />
-
-      {/* Audio Toggle */}
-      <button 
-        className={`landing__audio-toggle ${isAudioPlaying ? 'active' : ''}`}
-        onClick={toggleAudio}
-        title={isAudioPlaying ? "Silenciar sonido ambiental" : "Reproducir sonido ambiental"}
-      >
-        {isAudioPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
-      </button>
 
       {/* Main content */}
       <div className="landing__content">
