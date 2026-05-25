@@ -76,3 +76,14 @@ El Agresor puede usar sus puntos de Poder (⚡) para perjudicar a la Víctima a 
 ---
 
 *Esta documentación deberá utilizarse como contexto base para futuras iteraciones, correcciones o adiciones de contenido al proyecto.*
+
+### Sesión: Mayo 25, 2026 - Audio Global, Responsive Design y GitHub Pages
+**Desarrollo y Correcciones:**
+1. **Audio Global:** Se centralizó el manejo del audio en `audioSynth.js`, permitiendo silenciar tanto efectos especiales (dado, movimiento) como el sonido ambiental (estática/viento) mediante un único estado global persistente.
+2. **Botón Flotante (MuteButton):** Se extrajo el control de volumen del `Navbar` para colocarlo como un botón flotante circular e independiente en la esquina inferior derecha, garantizando visibilidad en todo momento (Inicio, Selección, Juego).
+3. **Optimización de Despliegue (Vite + GitHub Pages):** Se configuró `base: './'` en Vite y se creó un utilitario `asset()` (`utils.js`) para resolver de manera dinámica todas las rutas absolutas (`/imagen.png`) evitando errores de 404 Not Found en el despliegue a subrutas de GitHub Pages.
+4. **Diseño Responsivo (Móvil y Tablets):** Se reestructuró CSS en todos los componentes (`App.css`, `Navbar.css`, `LandingScreen.css`, `CharacterSelectionScreen.css`).
+   - El tablero principal pasó de un layout horizontal (`row`) a uno vertical (`column`).
+   - El Tablero 3D ocupa la parte superior en móviles, mientras que el HUD de estadísticas y el dado se reubicaron en una barra inferior deslizable horizontalmente (`overflow-x: auto`).
+   - El menú de navegación ocultó sus textos dejando solo iconos, y los personajes se apilan en 1 sola columna para facilitar la lectura y selección táctil.
+   - Ajuste de modales de historia al 95% del viewport para lectura óptima en celulares.
